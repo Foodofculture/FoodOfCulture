@@ -1,67 +1,52 @@
-import { GridTileImage } from "components/grid/tile";
-import { getCollectionProducts } from "lib/shopify";
-import type { Product } from "lib/shopify/types";
-import Link from "next/link";
+export function ThreeItemGrid() {
+  const homepageItems = [
+    {
+      title: "Korean Glass Noodles",
+      price: "₹350",
+      image: "/images/glass-noodles.jpg",
+      handle: "korean-glass-noodles",
+    },
+    {
+      title: "Bitter Melon",
+      price: "₹350",
+      image: "/images/bitter-melon.jpg",
+      handle: "bitter-melon",
+    },
+    {
+      title: "Tortilla Kit",
+      price: "₹350",
+      image: "/images/tortilla-kit.jpg",
+      handle: "tortilla-kit",
+    },
+  ];
 
-function ThreeItemGridItem({
-  item,
-  size,
-  priority,
-}: {
-  item: Product;
-  size: "full" | "half";
-  priority?: boolean;
-}) {
   return (
-    <div
-      className={
-        size === "full"
-          ? "md:col-span-4 md:row-span-2"
-          : "md:col-span-2 md:row-span-1"
-      }
-    >
-      <Link
-        className="relative block aspect-square h-full w-full"
-        href={`/product/${item.handle}`}
-        prefetch={true}
-      >
-        <GridTileImage
-          src={item.featuredImage.url}
-          fill
-          sizes={
-            size === "full"
-              ? "(min-width: 768px) 66vw, 100vw"
-              : "(min-width: 768px) 33vw, 100vw"
+    <section className="mx-auto grid max-w-7xl gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 lg:max-h-[calc(100vh-200px)]">
+      {homepageItems.map((item, index) => (
+        <div
+          key={index}
+          className={
+            index === 0
+              ? "md:col-span-4 md:row-span-2"
+              : "md:col-span-2 md:row-span-1"
           }
-          priority={priority}
-          alt={item.title}
-          label={{
-            position: size === "full" ? "center" : "bottom",
-            title: item.title as string,
-            amount: item.priceRange.maxVariantPrice.amount,
-            currencyCode: item.priceRange.maxVariantPrice.currencyCode,
-          }}
-        />
-      </Link>
-    </div>
-  );
-}
-
-export async function ThreeItemGrid() {
-  // Collections that start with `hidden-*` are hidden from the search page.
-  const homepageItems = await getCollectionProducts({
-    collection: "hidden-homepage-featured-items",
-  });
-
-  if (!homepageItems[0] || !homepageItems[1] || !homepageItems[2]) return null;
-
-  const [firstProduct, secondProduct, thirdProduct] = homepageItems;
-
-  return (
-    <section className="mx-auto grid max-w-(--breakpoint-2xl) gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 lg:max-h-[calc(100vh-200px)]">
-      <ThreeItemGridItem size="full" item={firstProduct} priority={true} />
-      <ThreeItemGridItem size="half" item={secondProduct} priority={true} />
-      <ThreeItemGridItem size="half" item={thirdProduct} />
+        >
+          <a
+            className="relative block aspect-square h-full w-full"
+            href={`#${item.handle}`}
+          >
+            <img
+              src={item.image}
+              alt={item.title}
+              className="object-cover w-full h-full"
+            />
+            <div className="absolute bottom-2 left-2 bg-white/80 p-1 rounded">
+              <h3 className="font-bold">{item.title}</h3>
+              <p className="text-sm">{item.price}</p>
+            </div>
+          </a>
+        </div>
+      ))}
     </section>
   );
 }
