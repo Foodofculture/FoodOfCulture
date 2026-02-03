@@ -3,7 +3,7 @@ export function ThreeItemGrid() {
     {
       title: "Korean Glass Noodles",
       price: "₹350",
-      image: "/images/glass-noodles.jpg",
+      image: "Food of culture_20260202_174604_0000.png",
       handle: "korean-glass-noodles",
     },
     {
@@ -15,7 +15,7 @@ export function ThreeItemGrid() {
     {
       title: "Tortilla Kit",
       price: "₹350",
-      image: "/images/tortilla-kit.jpg",
+      image: "Food of culture_20260202_174604_0000.png",
       handle: "tortilla-kit",
     },
   ];
